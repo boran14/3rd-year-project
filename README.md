@@ -1,5 +1,5 @@
 # 3rd-year-project
-You can either follow the instructions below or follow the video that i made to help you from this link
+You can either follow the instructions below or follow the video that i made to help you from this link https://drive.google.com/file/d/1z0FdD_5b9lehrtt31QKjUUpBuvqGCNpH/view?usp=sharing
 ## 1-Download
 First of all, download the source code as a .zip file and save it to your desktop.
 ## 2-Move folders
