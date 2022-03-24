@@ -1,0 +1,283 @@
+package chess;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+
+import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.layout.*;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+
+public class GUI extends Application {
+	private static Game g;
+	public Pane p;
+	public Pane pane;
+	public Scene scene1;
+	public Scene scene2;
+	public Stage window;
+	public Button originButton;
+	public Button destinationButton;
+	public TextField origin;
+	public TextField destination;
+	Alert alert;
+	public int count = 0;
+	public int x = 0;
+	public int y = 0;
+	public double s = 75; // side of rectangle
+	public ArrayList<ArrayList<Rectangle>> rectangles = new ArrayList<ArrayList<Rectangle>>();
+	public ArrayList<ArrayList<Circle>> circles = new ArrayList<ArrayList<Circle>>();
+
+	@Override
+	public void start(Stage primaryStage) throws Exception{
+
+			window = primaryStage;
+
+			pane = new Pane();
+			Button buttonNew = new Button("New Game");
+			buttonNew.setLayoutX(30);
+			buttonNew.setLayoutY(30);
+			buttonNew.setOnAction(e -> {
+			try {
+				g = new Game();
+				
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
+			RenderBoard();
+
+			window.setTitle("Draughts");
+			window.setScene(scene2);
+
+			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+    		window.setX((screenBounds.getWidth() - window.getWidth()) / 2); 
+    		window.setY((screenBounds.getHeight() - window.getHeight()) / 2);
+
+			//playGame();
+		  });
+
+		  	Button buttonLoad  = new Button("Load Game");
+		  	buttonLoad.setLayoutX(30);
+		    buttonLoad.setLayoutY(60);
+			buttonLoad.setOnAction(e -> {
+			try {
+				Load l = new Load("SavedGame.txt");
+                g = l.getLoad();
+				
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
+			RenderBoard();
+
+			window.setTitle("Draughts");
+			setSceneGame();
+			});
+
+		  pane.getChildren().add(buttonNew);
+		  pane.getChildren().add(buttonLoad);
+
+		  
+		
+
+		//p.getChildren().add(pane);
+
+	    // Create a scene and place it in the stage
+	    scene1 = new Scene(pane);
+	    window.setTitle("Menu");
+	    window.setScene(scene1); // Place in scene in the stage
+	    window.show();
+
+	}
+
+	private void setSceneGame() {
+		window.setScene(scene2);
+
+		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+		window.setX((screenBounds.getWidth() - window.getWidth()) / 2); 
+		window.setY((screenBounds.getHeight() - window.getHeight()) / 2);  
+	}
+
+	private void playGame() {
+
+
+	}
+
+	private void RenderBoard() {
+		// Create a GridPane
+		try{
+	    //GridPane pane = new GridPane();
+		p = new Pane();
+
+	    // Create 100 rectangles and add to pane
+	    count = 0;
+		x = 0;
+		y = 0;
+	    s = 75; // side of rectangle
+
+		for (int i = 0; i < 10; i++) {
+			ArrayList<Rectangle> line = new ArrayList<Rectangle>();
+			for (int j = 0; j < 10; j++) {
+				Rectangle r = new Rectangle();
+				if (count % 2 == 0){
+					r.setFill(Color.GRAY);
+				}
+				
+				else if( count % 2 == 1){
+					r.setFill(Color.DARKGREY);
+				}
+
+					r.setX(x);
+					r.setY(y);
+					r.setWidth(s);
+					r.setHeight(s);
+					x = x + 75;
+					count++;
+					line.add(r);
+					p.getChildren().add(r);
+			}
+			rectangles.add(line);
+			y = y + 75;
+			x = 0;
+			count++;
+		}
+
+		double x = 37.5;
+		double y = 37.5;
+
+		for (int i = 0; i < 10; i++) {
+			ArrayList<Circle> line = new ArrayList<Circle>();
+			for (int j = 0; j < 10; j++) {
+				
+				if(g.b.hasPiece(i, j)){
+					if(g.b.getPiece(i, j).colour == PieceColour.WHITE){
+						Circle circle = new Circle(x, y, 25.0);
+						circle.setFill(Color.WHITE);
+						p.getChildren().add(circle);
+						line.add(circle);
+					}
+					else if (g.b.getPiece(i, j).colour == PieceColour.BLACK){
+						Circle circle = new Circle(x, y, 25.0);
+						circle.setFill(Color.BLACK);
+						p.getChildren().add(circle);
+						line.add(circle);
+					}
+			}
+				
+				x = x + 75;
+			}
+			y = y + 75;
+			x = 37.5;
+			circles.add(line);
+		}
+
+		origin = new TextField();
+		origin.setLayoutX(10*76);
+		origin.setLayoutY(3*76);
+
+		destination = new TextField();
+		destination.setLayoutX(10*76);
+		destination.setLayoutY(4*76);
+
+		originButton = new Button("Move");
+		originButton.setLayoutX(10*76);
+		originButton.setLayoutY(5*76);
+		originButton.setOnAction(e -> {
+			try {
+				boolean isValidMove = movePieces(origin.getText(), destination.getText());
+				if(isValidMove){
+				RenderBoard();
+				setSceneGame();
+				}
+				else if (!isValidMove){
+					System.out.println("YES");
+					alert = new Alert(AlertType.ERROR);
+					alert.setContentText("Not A Valid Move!");
+					alert.showAndWait();
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			});
+		
+
+		p.getChildren().addAll(origin, destination, originButton);
+
+
+		scene2 = new Scene(p);
+
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}
+
+
+
+
+}
+
+	private boolean movePieces(String origin, String destination) throws Exception {
+		try {
+			boolean currentStatus = g.play(origin, destination);
+			System.out.println(currentStatus);
+			return currentStatus;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+	public static void main(String args[]) throws Exception {
+        //gui = new GUI(args);
+        //GUI.launch(args);
+		launch(args);
+        //BufferedReader originDebug = new BufferedReader(new InputStreamReader(System.in));
+		//String originDebu = originDebug.readLine();
+
+        //if(originDebu.equalsIgnoreCase("New")){
+            //g = new Game();
+			//launch(args);
+       // }
+
+        //else if(originDebu.equalsIgnoreCase("Load")){
+            //BufferedReader originDebug1 = new BufferedReader(new InputStreamReader(System.in));
+		    //String originDebu1 = originDebug1.readLine();
+            //try {
+                //Load l = new Load("SavedGame.txt");
+                //g = l.getLoad();
+                //System.out.println("Load Successful");
+				//launch(args);
+                //g.play();
+            //} catch (FileNotFoundException e) {
+                //e.printStackTrace();
+            //}
+            
+        //}
+    }
+
+    public Game getGame(){
+        return g;
+    }
+
+    public void setGame(Game g){
+        this.g = g;
+    }
+
+    public Board getGameBoard(){
+        return g.b;
+    }
+	
+	
+    
+}

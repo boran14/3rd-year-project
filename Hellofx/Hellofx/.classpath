@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="hellofxxx/Draughts/draughts"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx.web.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/javafx-swt.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/junit-4.13.2.jar"/>
+	<classpathentry kind="lib" path="hellofxxx/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
