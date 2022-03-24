@@ -23,12 +23,15 @@ public class Men extends Piece implements Serializable {
 		}
 	}
 
-	public boolean isLegitMove(int i, int j, int k, int l, CheckerBoard board11) {
+	public boolean check(int i, int j, int k, int l, CheckerBoard board11) {
 
 		return true;
 
 	}
 
+	// Multiple eat detection algorithm for more than one piece capture moves.
+	// Searches all sides for a possible move and discoveres that side fully before
+	// coming back
 	public void computeMoveableCoordinatesComplex(int i, int j, CheckerBoard board11, Colour current_color) {
 		ArrayList<Integer> coordinates;
 		ArrayList<Integer> toEatCoordinates;
@@ -702,6 +705,8 @@ public class Men extends Piece implements Serializable {
 		}
 	}
 
+	// Search algorithm for one piece captures.
+	// Calls the complex algorithm to check possible extra moves
 	public ArrayList<ArrayList<Integer>> computeMoveableCoordinates(int i, int j, CheckerBoard board11) {
 		ArrayList<Integer> coordinates;
 		ArrayList<Integer> toEatCoordinates;
@@ -1233,7 +1238,6 @@ public class Men extends Piece implements Serializable {
 
 		}
 
-		// System.out.println(toEatAll);
 		return moveableCoordinates;
 	}
 

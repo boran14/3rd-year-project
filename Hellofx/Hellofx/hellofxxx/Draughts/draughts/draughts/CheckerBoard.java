@@ -10,6 +10,8 @@ public class CheckerBoard implements Serializable {
 	private Square[][] board = new Square[10][10];
 	public int turn_count;
 
+	// Creates a 10x10 array with each element being a special Square class data
+	// type
 	public CheckerBoard() {
 		for (int i = 0; i < board[0].length; i++) {
 			for (int j = 0; j < board[1].length; j++)
@@ -31,6 +33,7 @@ public class CheckerBoard implements Serializable {
 		this.board = board11;
 	}
 
+	// Initialises pieces and places them on board
 	public void initialisePieces() {
 
 		boolean rowAlternate = false;
@@ -72,10 +75,12 @@ public class CheckerBoard implements Serializable {
 
 	}
 
+	// Used in early development
 	public void printBoard() {
 
 	}
 
+	// Moves the pieces and removes any piece that is captured
 	public boolean movePiece(int i0, int j0, int i1, int j1, Piece p, ArrayList<ArrayList<ArrayList<Integer>>> toEat) {
 
 		if (!toEat.isEmpty()) {
@@ -115,7 +120,6 @@ public class CheckerBoard implements Serializable {
 	}
 
 	public void setPiece(int iIn, int jIn, Piece p) {
-		// board[a][b] == new Square();
 		board[iIn][jIn].setPiece(p);
 	}
 
@@ -130,9 +134,6 @@ public class CheckerBoard implements Serializable {
 				}
 			}
 		}
-
-		// System.out.println(color.toString());
-		// System.out.println(total);
 
 		return total;
 	}

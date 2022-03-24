@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.*;
 
 public abstract class Piece implements Serializable {
-  private int row;
-  private int column;
   private String symbol;
   protected Colour colour;
 
@@ -21,20 +19,7 @@ public abstract class Piece implements Serializable {
     return colour;
   }
 
-  public void updateCoordinates(int i, int j) {
-    this.row = i;
-    this.column = j;
-  }
-
-  // public int getRow() {
-  // return this.row;
-  // }
-
-  // public int getColumn() {
-  // return this.column;
-  // }
-
-  public abstract boolean isLegitMove(int i, int j, int k, int l, CheckerBoard board11);
+  public abstract boolean check(int i, int j, int k, int l, CheckerBoard board11);
 
   public abstract ArrayList<ArrayList<Integer>> computeMoveableCoordinates(int i, int j, CheckerBoard board11);
 

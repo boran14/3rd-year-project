@@ -15,7 +15,6 @@ public class Load {
         obj = ois.readObject();
 
         this.g = (Draughts) obj;
-        // this.board = (Square[][]) ois.readObject();
         ois.close();
     }
 

@@ -27,7 +27,7 @@ public class King extends Piece implements Serializable {
 		}
 	}
 
-	public boolean isLegitMove(int i, int j, int k, int l, CheckerBoard board11) {
+	public boolean check(int i, int j, int k, int l, CheckerBoard board11) {
 		this.board1 = board11.getBoard();
 		int d;
 		int f;
@@ -36,6 +36,10 @@ public class King extends Piece implements Serializable {
 		return true;
 	}
 
+	// Multiple eat detection algorithm for more than one piece capture moves after
+	// capturing.
+	// Searches all sides for a possible move and discoveres that side fully before
+	// coming back
 	public void computeMoveableCoordinatesComplexAfterEat(int i, int j, CheckerBoard board11, Colour current_color,
 			Direction dr) {
 		ArrayList<Integer> coordinates;
@@ -1008,6 +1012,9 @@ public class King extends Piece implements Serializable {
 
 	}
 
+	// Multiple eat detection algorithm for more than one piece capture moves.
+	// Searches all sides for a possible move and discoveres that side fully before
+	// coming back
 	public void computeMoveableCoordinatesComplex(int i, int j, CheckerBoard board11, Colour current_color,
 			Direction dr) {
 		ArrayList<Integer> coordinates;
@@ -1360,9 +1367,6 @@ public class King extends Piece implements Serializable {
 					for (ArrayList<Integer> ch : toEat) {
 						hold.add(ch);
 					}
-					// System.out.print("yessss");
-					// System.out.println(hold);
-					// System.out.print("noooo");
 					for (Direction direc : Direction.values()) {
 						if (direc != Direction.SE && direc != Direction.NW) {
 							computeMoveableCoordinatesComplexAfterEat(i - 2, j + 2, board11, current_color, direc);
@@ -2498,6 +2502,8 @@ public class King extends Piece implements Serializable {
 		toEat.clear();
 	}
 
+	// Search algorithm for one piece captures.
+	// Calls the complex algorithm to check possible extra moves
 	public ArrayList<ArrayList<Integer>> computeMoveableCoordinates(int i, int j, CheckerBoard board11) {
 		ArrayList<Integer> coordinates;
 		ArrayList<Integer> toEatCoordinates;

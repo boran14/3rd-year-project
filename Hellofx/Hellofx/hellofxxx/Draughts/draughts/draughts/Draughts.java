@@ -18,6 +18,7 @@ public class Draughts implements Serializable {
 	public String originDebug;
 	public int boran = 1;
 
+	// Main constructor method for new games
 	public Draughts() throws Exception {
 		turn = Colour.WHITE;
 		this.b = new CheckerBoard();
@@ -28,6 +29,7 @@ public class Draughts implements Serializable {
 
 	}
 
+	// Main constructor method for loading games
 	public Draughts(CheckerBoard b) throws Exception {
 		turn = Colour.WHITE;
 		this.b = b;
@@ -37,20 +39,20 @@ public class Draughts implements Serializable {
 
 	}
 
+	// Main Game loop
+	// Checks the input and moves the pieces
 	public boolean play(String originDebu, String destinationDebu) throws Exception {
 		Console originConsole;
 		Console destinationConsole;
 		String inputOrigin;
 		String inputDestination;
 		Colour turnColour;
-		// CheckerBoard b = new CheckerBoard();
 		int[] arrayOrigin;
 		int[] arrayDestination;
 		arrayOrigin = inputTaker(originDebu, "origin");
 		if (gameEnd == false) {
 			arrayDestination = inputTaker(destinationDebu, "destination");
 		} else {
-			// System.out.println("bitirir");
 			arrayDestination = null;
 			System.exit(0);
 		}
@@ -58,8 +60,7 @@ public class Draughts implements Serializable {
 		if (gameEnd == false) {
 			Piece piece = b.getPiece(arrayOrigin[0], arrayOrigin[1]);
 			System.out.println(piece.getToEatCoordinates());
-			if (piece.isLegitMove(arrayOrigin[0], arrayOrigin[1], arrayDestination[0], arrayDestination[1], b)) {
-				// System.out.println("IsLegit is legit");
+			if (piece.check(arrayOrigin[0], arrayOrigin[1], arrayDestination[0], arrayDestination[1], b)) {
 				if (b.hasPiece(arrayDestination[0], arrayDestination[1])
 						&& b.getPiece(arrayDestination[0], arrayDestination[1]).getColour() == turn) {
 					return false;
@@ -69,9 +70,6 @@ public class Draughts implements Serializable {
 					gameEnd = b.movePiece(arrayOrigin[0], arrayOrigin[1], arrayDestination[0], arrayDestination[1],
 							b.getPiece(arrayOrigin[0], arrayOrigin[1]), piece.getToEatCoordinates());
 					if (gameEnd) {
-						// b.printBoard();
-						System.out.println(turn + " Wins!");
-						// System.exit(0);
 						return false;
 					}
 					turnManeger();
@@ -85,6 +83,7 @@ public class Draughts implements Serializable {
 		return false;
 	}
 
+	// Turn manager to alternate between colors/players
 	public void turnManeger() {
 		if (turn == Colour.WHITE) {
 			turn = Colour.BLACK;
@@ -101,7 +100,6 @@ public class Draughts implements Serializable {
 		debug1 = debug;
 		if (input.equals(end) || input.equals(end1)) {
 			gameEnd = true;
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~GAME ENDED~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			validInput = false;
 		}
 
